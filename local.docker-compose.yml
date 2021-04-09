@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  glue:
+    image: amazon/aws-glue-libs:glue_libs_1.0.0_image_01
+    command: /home/zeppelin/bin/zeppelin.sh
+    volumes:
+      - $HOME/.aws/:/home/.aws/
+    ports:
+      - "8080:8080"
+      - "4040:4040"
+    networks:
+     - glue-network
+networks:
+  glue-network:
