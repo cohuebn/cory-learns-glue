@@ -38,3 +38,8 @@ variable "cidr_block" {
   description = "The CIDR block to use for the VPC resources are created within"
   default     = "10.0.0.0/16"
 }
+
+variable "create_development_endpoint" {
+  type    = bool
+  default = false
+}

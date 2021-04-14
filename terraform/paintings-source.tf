@@ -1,6 +1,7 @@
 resource "aws_s3_bucket" "paintings_source" {
-  bucket = "${var.namespace}-paintings-source"
-  tags   = local.tags
+  bucket        = "${var.namespace}-paintings-source"
+  tags          = local.tags
+  force_destroy = true
 }
 
 locals {

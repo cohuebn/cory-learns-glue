@@ -1,0 +1,18 @@
+attrs==20.3.0
+colorama==0.4.4
+-e git+https://github.com/cohuebn/cory-learns-glue.git@4cf8fee57b2492ff28345d12da122321e30a3059#egg=cory.etl&subdirectory=etl
+docopt==0.6.2
+importlib-metadata==3.10.1
+iniconfig==1.1.1
+packaging==20.9
+pluggy==0.13.1
+py==1.10.0
+pyparsing==2.4.7
+pytest==6.2.3
+pytest-watch==4.2.0
+setuptools==40.6.2
+toml==0.10.2
+typing-extensions==3.7.4.3
+watchdog==2.0.2
+wheel==0.36.2
+zipp==3.4.1
