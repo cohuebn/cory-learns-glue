@@ -5,11 +5,13 @@ from pyspark.context import SparkContext
 from awsglue.context import GlueContext
 from awsglue.transforms import *
 from awsglue.dynamicframe import DynamicFrame
+from awsglue.utils import getResolvedOptions
 from pyspark.sql.types import *
 from pyspark.sql import Row
 glueContext = GlueContext(SparkContext.getOrCreate())
 
 args = getResolvedOptions(sys.argv, [ 'input_database', 'input_table', 'processed_bucket' ])
+
 paintings = glueContext.create_dynamic_frame.from_catalog(
   database = args['input_database'],
   table_name = args['input_table']
