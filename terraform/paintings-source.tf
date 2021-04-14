@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "paintings_source" {
 }
 
 locals {
-  bob_ross_paintings_directory = "${path.module}/../datasets/bob-ross-paintings"
+  bob_ross_paintings_directory = "${path.module}/datasets/bob-ross-paintings"
 }
 
 resource "aws_s3_bucket_object" "bob_ross_painting" {
