@@ -4,22 +4,27 @@ orbs:
 workflows:
   publish_etl:
     jobs:
-    - build
+    - build_and_deploy_glue_code
 jobs:
-  build:
+  build_and_deploy_glue_code:
     docker:
     - image: cimg/python:3.7
     steps:
     - checkout
     - run:
+        working_directory: etl
         command: pip install -r requirements.txt
-        working_directory: etl
     - run:
+        working_directory: etl
         command: pip install .
-        working_directory: etl
     - run:
+        working_directory: etl
         command: python -m pytest
-        working_directory: etl
     - run:
-        command: python setup.py bdist_wheel
         working_directory: etl
+        command: python setup.py bdist_wheel
+    - aws-s3/copy:
+        working_directory: etl
+        arguments: '--dryrun'
+        from: /dist/cory.etl-0.0.1-py3-non-any.whl
+        to: 's3://glue-learning-jobs-source/'
