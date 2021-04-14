@@ -27,5 +27,5 @@ jobs:
         from: etl/dist/cory.etl-0.0.1-py3-none-any.whl
         to: 's3://glue-learning-jobs-source/'
     - aws-s3/copy:
-        from: etl/jobs/*
+        from: etl/src/jobs/*
         to: 's3://glue-learning-jobs-source/'
