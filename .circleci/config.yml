@@ -11,6 +11,7 @@ jobs:
     - image: cimg/python:3.7
     steps:
     - checkout
+    - run: cd etl
     - run: pip install -r requirements.txt
     - run: python -m pytest
     - run: python setup.py bdist_wheel
