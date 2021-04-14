@@ -1,6 +1,5 @@
 attrs==20.3.0
 colorama==0.4.4
--e git+https://github.com/cohuebn/cory-learns-glue.git@4cf8fee57b2492ff28345d12da122321e30a3059#egg=cory.etl&subdirectory=etl
 docopt==0.6.2
 importlib-metadata==3.10.1
 iniconfig==1.1.1
