@@ -88,8 +88,9 @@ resource "aws_iam_role_policy_attachment" "process_csv_paintings_glue" {
 }
 
 resource "aws_glue_job" "process_csv_paintings" {
-  name     = "process-s3-paintings"
-  role_arn = aws_iam_role.process_csv_paintings.arn
+  name         = "process-s3-paintings"
+  role_arn     = aws_iam_role.process_csv_paintings.arn
+  glue_version = "2.0"
 
   command {
     script_location = "s3://${aws_s3_bucket.glue_jobs_source.bucket}/process-s3-paintings.py"
@@ -98,5 +99,9 @@ resource "aws_glue_job" "process_csv_paintings" {
   default_arguments = {
     "--job-language"   = "python"
     "--extra-py-files" = "s3://${aws_s3_bucket.glue_jobs_source.bucket}/cory.etl-0.0.1-py3-none-any.whl"
+    # Underscores used for custom params per this doc: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-get-resolved-options.html
+    "--input_database" = aws_glue_crawler.csv_paintings.database_name
+    "--input_table" = aws_s3_bucket.paintings_source.bucket
+    "--processed_bucket" = aws_s3_bucket.paintings_processed.bucket
   }
 }
