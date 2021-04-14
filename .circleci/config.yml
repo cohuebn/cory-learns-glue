@@ -24,7 +24,5 @@ jobs:
         working_directory: etl
         command: python setup.py bdist_wheel
     - aws-s3/copy:
-        working_directory: etl
-        arguments: '--dryrun'
-        from: /dist/cory.etl-0.0.1-py3-non-any.whl
+        from: etl/dist/cory.etl-0.0.1-py3-non-any.whl
         to: 's3://glue-learning-jobs-source/'
