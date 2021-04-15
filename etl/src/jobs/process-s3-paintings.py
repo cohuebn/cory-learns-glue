@@ -31,7 +31,7 @@ bit_fields_specs = [
     if field.name not in non_bit_fields and field.dataType.typeName() == 'long' # Type-check to provide accidentally casting a non-bit column if not in "non_bit_fields"
 ]
 paintings_with_bool_fields = ResolveChoice.apply(paintings, specs = bit_fields_specs, transformation_ctx = "BitCasted")
-paintings_with_parsed_episodes = Map.apply(frame = paintings_with_bool_fields, f = parse_episode, transformation_ctx = "ParsedEpisodes"))
+paintings_with_parsed_episodes = Map.apply(frame = paintings_with_bool_fields, f = parse_episode, transformation_ctx = "ParsedEpisodes")
 
 # Write the processed frame in Parquet format
 glueContext.write_dynamic_frame.from_options(
