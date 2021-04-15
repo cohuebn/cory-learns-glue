@@ -8,18 +8,17 @@ from awsglue.dynamicframe import DynamicFrame
 from awsglue.utils import getResolvedOptions
 from pyspark.sql.types import *
 from pyspark.sql import Row
-glueContext = GlueContext(SparkContext.getOrCreate())
 
-# args = getResolvedOptions(sys.argv, [ 'input_database', 'input_table', 'processed_bucket' ])
-args = {
-  'input_database': 'glue-learning-paintings',
-  'input_table': 'glue_learning_paintings_source',
-  'processed_bucket': 'glue-learning-paintings-processed'
-}
+args = getResolvedOptions(sys.argv, [ 'JOB_NAME', 'input_database', 'input_table', 'processed_bucket' ])
+glueContext = GlueContext(SparkContext.getOrCreate())
+spark = glueContext.spark_session
+job = Job(glueContext)
+job.init(args['JOB_NAME'], args)
 
 paintings = glueContext.create_dynamic_frame.from_catalog(
   database = args['input_database'],
-  table_name = args['input_table']
+  table_name = args['input_table'],
+  transformation_ctx = "DataSource"
 )
 
 # Cast all "bit" fields (LongTypes) into booleans
@@ -30,13 +29,15 @@ bit_fields_specs = [
     for field in paintings.schema()
     if field.name not in non_bit_fields and field.dataType.typeName() == 'long' # Type-check to provide accidentally casting a non-bit column if not in "non_bit_fields"
 ]
-paintings_with_bool_fields = ResolveChoice.apply(paintings, specs = bit_fields_specs)
-paintings_with_parsed_episodes = Map.apply(frame = paintings_with_bool_fields, f = parse_episode)
+paintings_with_bool_fields = ResolveChoice.apply(paintings, specs = bit_fields_specs, transformation_ctx = "BitCasted")
+paintings_with_parsed_episodes = Map.apply(frame = paintings_with_bool_fields, f = parse_episode, , transformation_ctx = "ParsedEpisodes"))
 
 # Write the processed frame in Parquet format
 glueContext.write_dynamic_frame.from_options(
   frame = paintings_with_parsed_episodes,
   connection_type = 's3',
   connection_options = { 'path': 's3://' + args["processed_bucket"] + '/', 'partitionKeys': ['season'] },
-  format = 'parquet'
+  format = 'parquet',
+  transformation_ctx = "DataSink"
 )
+job.commit()
