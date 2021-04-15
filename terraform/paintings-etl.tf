@@ -64,8 +64,13 @@ data "aws_iam_policy_document" "process_csv_paintings" {
     resources = ["${aws_s3_bucket.paintings_source.arn}/*"]
   }
   statement {
-    actions   = ["s3:ListBucket", "s3:PutObject", "s3:DeleteObject"]
-    resources = [aws_s3_bucket.paintings_processed.arn, "${aws_s3_bucket.paintings_processed.arn}/*"]
+    actions = ["s3:ListBucket", "s3:PutObject", "s3:DeleteObject"]
+    resources = [
+      aws_s3_bucket.paintings_processed.arn,
+      "${aws_s3_bucket.paintings_processed.arn}/*",
+      aws_s3_bucket.glue_temp_files.arn,
+      "${aws_s3_bucket.glue_temp_files.arn}/*",
+    ]
   }
 }
 
