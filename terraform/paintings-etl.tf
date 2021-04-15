@@ -64,8 +64,8 @@ data "aws_iam_policy_document" "process_csv_paintings" {
     resources = ["${aws_s3_bucket.paintings_source.arn}/*"]
   }
   statement {
-    actions   = ["s3:PutObject"]
-    resources = ["${aws_s3_bucket.paintings_processed.arn}/*"]
+    actions   = ["s3:ListBucket", "s3:PutObject", "s3:DeleteObject"]
+    resources = [aws_s3_bucket.paintings_processed.arn, "${aws_s3_bucket.paintings_processed.arn}/*"]
   }
 }
 
@@ -101,6 +101,7 @@ resource "aws_glue_job" "process_csv_paintings" {
   default_arguments = {
     "--job-language"   = "python"
     "--extra-py-files" = "s3://${aws_s3_bucket.glue_jobs_source.bucket}/cory.etl-0.0.1-py3-none-any.whl"
+    "--TempDir"        = "s3://${aws_s3_bucket.glue_temp_files.bucket}/process-s3-paintings/"
     # Underscores used for custom params per this doc: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-get-resolved-options.html
     "--input_database"   = aws_glue_crawler.csv_paintings.database_name
     "--input_table"      = aws_s3_bucket.paintings_source.bucket
