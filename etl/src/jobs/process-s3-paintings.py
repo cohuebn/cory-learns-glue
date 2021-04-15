@@ -37,6 +37,6 @@ paintings_with_parsed_episodes = Map.apply(frame = paintings_with_bool_fields, f
 glueContext.write_dynamic_frame.from_options(
   frame = paintings_with_parsed_episodes,
   connection_type = 's3',
-  connection_options = { 'path': 's3://' + args["processed_bucket"], 'partitionKeys': ['season'] },
+  connection_options = { 'path': 's3://' + args["processed_bucket"] + '/', 'partitionKeys': ['season'] },
   format = 'parquet'
 )
