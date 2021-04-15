@@ -1,14 +1,13 @@
 import sys
-import re
-from paintings import parse_episode
-from pyspark.context import SparkContext
+
 from awsglue.context import GlueContext
-from awsglue.transforms import *
-from awsglue.dynamicframe import DynamicFrame
 from awsglue.job import Job
+from awsglue.transforms import *
 from awsglue.utils import getResolvedOptions
+from pyspark.context import SparkContext
 from pyspark.sql.types import *
-from pyspark.sql import Row
+
+from paintings import parse_episode
 
 args = getResolvedOptions(sys.argv, [ 'JOB_NAME', 'input_database', 'input_table', 'processed_bucket' ])
 glueContext = GlueContext(SparkContext.getOrCreate())
