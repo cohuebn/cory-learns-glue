@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  integration-tests:
+    image: amazon/aws-glue-libs:glue_libs_1.0.0_image_01
+    command: "sh -c 'cd /etl && pip install -r requirements.txt && pip install . && /home/aws-glue-libs/bin/gluepytest .'"
+    volumes:
+      - $HOME/.aws/:/home/.aws/
+    ports:
+      - "8080:8080"
+      - "4040:4040"
+    networks:
+     - glue-integration-tests-network
+    volumes:
+      - "./:/etl"
+networks:
+  glue-integration-tests-network:

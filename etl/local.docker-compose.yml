@@ -11,5 +11,7 @@ services:
       - "4040:4040"
     networks:
      - glue-network
+    volumes:
+      - "./etl:/etl"
 networks:
   glue-network:
