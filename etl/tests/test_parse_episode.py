@@ -9,9 +9,8 @@ def test_extracting_season_and_episode_number():
   assert updated_record['episode'] == 13
 
 episode_name_test_cases = [
-  # TODO - evaluate if the titlecase pip module could be used and work better here
-  ('A WALK IN THE WOODS', 'A Walk In The Woods'),
-  ('MT. MCKINLEY', 'Mt. Mckinley'),
+  ('A WALK IN THE WOODS', 'A Walk in the Woods'),
+  ('MT. MCKINLEY', 'Mt. McKinley'),
   ('MOUNTAIN BLOSSOMS', 'Mountain Blossoms')
 ]
 @pytest.mark.parametrize('original_title,output_title', episode_name_test_cases)

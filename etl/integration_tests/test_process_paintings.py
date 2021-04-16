@@ -33,7 +33,7 @@ def test_episode_parsing():
   first_episode = _find_row(transformed_paintings, 'S01E01')
   assert first_episode['season'] == 1
   assert first_episode['episode'] == 1
-  assert first_episode['title'] == 'A Walk In The Woods'
+  assert first_episode['title'] == 'A Walk in the Woods'
   second_episode = _find_row(transformed_paintings, 'S03E13')
   assert second_episode['season'] == 3
   assert second_episode['episode'] == 13
