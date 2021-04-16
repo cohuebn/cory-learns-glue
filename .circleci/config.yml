@@ -12,20 +12,26 @@ jobs:
     steps:
     - checkout
     - run:
+        name: Install dependencies
         working_directory: etl
         command: pip install -r requirements.txt
     - run:
+        name: Install self
         working_directory: etl
         command: pip install .
     - run:
+        name: Run unit tests
         working_directory: etl
-        command: python -m pytest
+        command: python -m pytest --ignore=integration_tests
     - run:
+        name: Package files
         working_directory: etl
         command: python setup.py bdist_wheel
     - aws-s3/copy:
+        name: Upload packaged files
         from: etl/dist/cory.etl-0.0.1-py3-none-any.whl
         to: 's3://glue-learning-jobs-source/'
     - aws-s3/copy:
+        name: Upload Glue job scripts
         from: etl/src/jobs/*
         to: 's3://glue-learning-jobs-source/'
