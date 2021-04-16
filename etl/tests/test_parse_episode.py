@@ -1,5 +1,5 @@
 import pytest
-from paintings import parse_episode
+from paintings.parse_episode import parse_episode
 
 def test_extracting_season_and_episode_number():
   record = { 'episode': 'S02E13', 'title': 'MT. MCKINLEY' }
