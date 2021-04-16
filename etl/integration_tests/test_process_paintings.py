@@ -3,6 +3,7 @@ from pyspark.context import SparkContext
 from awsglue.context import GlueContext
 from awsglue.dynamicframe import DynamicFrame
 from pyspark.sql.types import *
+
 glueContext = GlueContext(SparkContext.getOrCreate())
 
 # Static source records for testing
