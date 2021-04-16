@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# There isn't currently a pip-compatible glue package. This script just downloads the package and add it to the
+# There isn't currently a pip-compatible glue package. This script just downloads the glue modules and adds them to the
 # requested output directory
 
 import argparse
