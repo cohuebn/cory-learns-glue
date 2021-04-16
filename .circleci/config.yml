@@ -28,10 +28,8 @@ jobs:
         working_directory: etl
         command: python setup.py bdist_wheel
     - aws-s3/copy:
-        name: Upload packaged files
         from: etl/dist/cory.etl-0.0.1-py3-none-any.whl
         to: 's3://glue-learning-jobs-source/'
     - aws-s3/copy:
-        name: Upload Glue job scripts
         from: etl/src/jobs/*
         to: 's3://glue-learning-jobs-source/'
