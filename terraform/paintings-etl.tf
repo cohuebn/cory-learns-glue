@@ -82,11 +82,12 @@ resource "aws_glue_job" "process_csv_paintings" {
   name              = "process-s3-paintings"
   role_arn          = aws_iam_role.paintings_etl.arn
   glue_version      = "2.0"
-  number_of_workers = 10
+  number_of_workers = 2
   worker_type       = "G.1X"
 
   command {
     script_location = "s3://${aws_s3_bucket.glue_jobs_source.bucket}/process_s3_paintings.py"
+    python_version  = "3"
   }
 
   default_arguments = {

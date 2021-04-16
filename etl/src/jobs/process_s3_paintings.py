@@ -25,7 +25,7 @@ transformed_paintings = process_paintings(paintings)
 glueContext.write_dynamic_frame.from_options(
   frame = transformed_paintings,
   connection_type = 's3',
-  connection_options = { 'path': f's3://{args["processed_bucket"]}/', 'partitionKeys': ['season'] },
+  connection_options = { 'path': f's3://{args["processed_bucket"]}/' },
   format = "glueparquet",
   transformation_ctx = "paintings-sink"
 )
