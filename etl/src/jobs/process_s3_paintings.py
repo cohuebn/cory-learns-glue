@@ -20,7 +20,9 @@ paintings = glueContext.create_dynamic_frame.from_catalog(
   transformation_ctx = "paintings-source"
 )
 
-transformed_paintings = process_paintings(add_filename(paintings))
+transformed_paintings = process_paintings(
+  add_filename(paintings, glueContext)
+)
 
 # Write the processed frame in Parquet format
 optimal_parquet_size_in_bytes = 1048576 * 512
