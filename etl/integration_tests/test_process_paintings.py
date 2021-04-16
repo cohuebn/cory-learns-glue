@@ -1,4 +1,4 @@
-from paintings import process_paintings
+from paintings.process_paintings import process_paintings
 from pyspark.context import SparkContext
 from awsglue.context import GlueContext
 from awsglue.dynamicframe import DynamicFrame

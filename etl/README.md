@@ -18,6 +18,7 @@ To run unit tests, take these steps:
 1. Run `python -m pytest --ignore=integration_tests`. Notice that ignores integration-tests which require an actual Glue environment
 
 ## Run integration tests
-To run integration tests, you'll need a Glue environment. You can use Docker to build that environment. Take the following steps to run all tests (unit and integration):
+Integration tests depend on Spark and a Glue environment. You can use Docker to build that environment.
+Take the following steps to run all tests (unit and integration):
 1. Ensure Docker is running on your machine.
 1. Run `docker-compose -f integration-tests.docker-compose.yml up --build`. This will launch a Glue environment and run all tests within that environment.
