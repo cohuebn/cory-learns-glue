@@ -20,6 +20,10 @@ jobs:
         working_directory: etl
         command: pip install .
     - run:
+        name: Lint
+        working_directory: etl
+        command: pylint src/ --rcfile=.pylintrc
+    - run:
         name: Run unit tests
         working_directory: etl
         command: python -m pytest --ignore=integration_tests
