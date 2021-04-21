@@ -16,6 +16,10 @@ jobs:
         working_directory: etl
         command: pip install -r requirements.txt
     - run:
+        name: Install Glue modules
+        working_directory: etl
+        command: ./add_glue_modules.py
+    - run:
         name: Install self
         working_directory: etl
         command: pip install .
