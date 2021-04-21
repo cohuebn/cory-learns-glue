@@ -18,7 +18,7 @@ jobs:
     - run:
         name: Install Glue modules
         working_directory: etl
-        command: ./add_glue_modules.py
+        command: ./add_glue_modules.py --output_dir $(python -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')
     - run:
         name: Install self
         working_directory: etl
