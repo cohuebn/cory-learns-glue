@@ -19,7 +19,9 @@ job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 
 # optimal_parquet_size_in_bytes = 1048576 * 512
-logging.debug(f'Creating source data frame from database {args["input_database"]}, and table {args["input_table"]}')
+logging.debug('Creating source data frame from database %s, and table %s',
+              args["input_database"],
+              args["input_table"])
 paintings = glueContext.create_dynamic_frame.from_catalog(
   database = args['input_database'],
   table_name = args['input_table'],
