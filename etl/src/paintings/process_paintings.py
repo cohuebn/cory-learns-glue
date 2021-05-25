@@ -12,6 +12,8 @@ def process_paintings(paintings: DynamicFrame) -> DynamicFrame:
       for field in paintings.schema()
       if field.name not in non_bit_fields and field.dataType.typeName() == 'long'
   ]
+  if not bit_fields_specs:
+    return paintings
   paintings_with_bool_fields = ResolveChoice.apply(paintings,
                                                    specs = bit_fields_specs,
                                                    transformation_ctx = "paintings_with_bool_fields")

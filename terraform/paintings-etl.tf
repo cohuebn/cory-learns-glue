@@ -93,7 +93,7 @@ resource "aws_glue_job" "process_csv_paintings" {
   default_arguments = {
     "--job-language" = "python"
     # Job setup using standard Glue params
-    //    "--job-bookmark-option" = "job-bookmark-enable"
+    "--job-bookmark-option" = "job-bookmark-enable"
     "--enable-continuous-cloudwatch-log" : "true"
     "--extra-py-files"            = "s3://${aws_s3_bucket.glue_jobs_source.bucket}/cory.etl-0.0.1-py3-none-any.whl"
     "--TempDir"                   = "s3://${aws_s3_bucket.glue_temp_files.bucket}/process_s3_paintings/"

@@ -52,3 +52,9 @@ def test_boolean_casting():
   assert second_episode['apple_frame'] == False
   assert second_episode['aurora_borealis'] == True
   assert second_episode['an_unmapped_field'] == 321
+
+def test_empty_dynamic_frame_test():
+  paintings_data_frame = glueContext.createDataFrame([], schema=StructType([]))
+  paintings = DynamicFrame.fromDF(paintings_data_frame, glueContext, 'paintings')
+  transformed_paintings = process_paintings(paintings)
+  assert transformed_paintings.count() == 0
