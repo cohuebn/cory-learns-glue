@@ -5,15 +5,15 @@ set -e
 # Print help text and exit.
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   cat <<HELP
-Usage: deploy --tf-organization <your-tf-cloud-organization>
+Usage: deploy --tf-organization <your-tf-cloud-organization> --tf-action <tf-action>
 
 Args:
   - tf-organization: The name of your Terraform cloud organization. This overrides the TF_ORGANIZATION environment variable value when set
-  - tf-workspace: The name of your Terraform cloud workspace. This overrides the TF_WORKSPACE environment variable value when set
+  - tf-action: The name of the Terraform CLI action to run (plan, apply, destroy, etc.)
 
 Examples:
   - deploy
-  - deploy --tf-organization alternative-tf-org-name
+  - deploy --tf-organization alternative-tf-org-name --tf-action destroy
 HELP
   exit 1
 fi

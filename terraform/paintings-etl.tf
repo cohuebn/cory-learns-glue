@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "glue_assume_role" {
 
 data "aws_iam_policy_document" "paintings_etl" {
   statement {
-    actions = ["s3:HeadObject", "s3:ListObjects", "s3:GetObject"]
+    actions = ["s3:ListObjects", "s3:ListBucket", "s3:HeadObject", "s3:GetObject"]
     resources = [
       aws_s3_bucket.glue_jobs_source.arn,
       "${aws_s3_bucket.glue_jobs_source.arn}/*",
@@ -91,14 +91,18 @@ resource "aws_glue_job" "process_csv_paintings" {
   }
 
   default_arguments = {
-    "--job-language"   = "python"
-    "--extra-py-files" = "s3://${aws_s3_bucket.glue_jobs_source.bucket}/cory.etl-0.0.1-py3-none-any.whl"
-    "--TempDir"        = "s3://${aws_s3_bucket.glue_temp_files.bucket}/process_s3_paintings/"
-    # Underscores used for custom params per this doc: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-get-resolved-options.html
-    "--input_database"            = aws_glue_crawler.csv_paintings_source.database_name
-    "--input_table"               = replace(aws_s3_bucket.paintings_source.bucket, "-", "_") # Glue crawler naming convention uses underscores on created tables
-    "--processed_bucket"          = aws_s3_bucket.paintings_processed.bucket
+    "--job-language" = "python"
+    # Job setup using standard Glue params
+    //    "--job-bookmark-option" = "job-bookmark-enable"
+    "--enable-continuous-cloudwatch-log" : "true"
+    "--extra-py-files"            = "s3://${aws_s3_bucket.glue_jobs_source.bucket}/cory.etl-0.0.1-py3-none-any.whl"
+    "--TempDir"                   = "s3://${aws_s3_bucket.glue_temp_files.bucket}/process_s3_paintings/"
     "--additional-python-modules" = "titlecase==2.0.0"
+    # Custom arguments needed for the job run
+    # Underscores used for custom params per this doc: https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-crawler-pyspark-extensions-get-resolved-options.html
+    "--input_database"   = aws_glue_crawler.csv_paintings_source.database_name
+    "--input_table"      = replace(aws_s3_bucket.paintings_source.bucket, "-", "_") # Glue crawler naming convention uses underscores on created tables
+    "--processed_bucket" = aws_s3_bucket.paintings_processed.bucket
   }
 }
 

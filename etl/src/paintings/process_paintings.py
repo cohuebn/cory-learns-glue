@@ -14,7 +14,7 @@ def process_paintings(paintings: DynamicFrame) -> DynamicFrame:
   ]
   paintings_with_bool_fields = ResolveChoice.apply(paintings,
                                                    specs = bit_fields_specs,
-                                                   transformation_ctx = "paintings_with_bool_cast")
+                                                   transformation_ctx = "paintings_with_bool_fields")
   paintings_with_parsed_episodes = Map.apply(frame = paintings_with_bool_fields,
                                              f = parse_episode,
                                              transformation_ctx = "paintings_with_parsed_episodes")

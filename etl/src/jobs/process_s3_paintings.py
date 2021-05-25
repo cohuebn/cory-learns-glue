@@ -1,3 +1,4 @@
+import logging
 import sys
 
 from awsglue.context import GlueContext
@@ -10,6 +11,7 @@ from common.transforms.with_filename import with_filename
 from common.transforms.with_current_timestamp import with_current_timestamp
 from paintings.process_paintings import process_paintings
 
+logging.debug('Beginning process_s3_paintings job')
 args = getResolvedOptions(sys.argv, [ 'JOB_NAME', 'input_database', 'input_table', 'processed_bucket' ])
 glueContext = GlueContext(SparkContext.getOrCreate())
 spark = glueContext.spark_session
@@ -17,6 +19,7 @@ job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 
 # optimal_parquet_size_in_bytes = 1048576 * 512
+logging.debug(f'Creating source data frame from database {args["input_database"]}, and table {args["input_table"]}')
 paintings = glueContext.create_dynamic_frame.from_catalog(
   database = args['input_database'],
   table_name = args['input_table'],
